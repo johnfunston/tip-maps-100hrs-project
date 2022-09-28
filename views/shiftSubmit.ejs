@@ -1,0 +1,65 @@
+    <%- include('partials/header') -%>
+    <div class="pageTitle">
+        <h1>Submit New Shift</h1>
+    </div>
+    <div class="shiftForms">
+        <form action="/shifts/shiftSubmit" method="POST" class="submitShiftForm">
+            <!--Postion-->
+            <h2>Position</h2>
+            <input type="radio" id="position1" name="position" value="HTML">
+            <label for="position1"><%= user.positions[0] %> (default)</label>
+             <!--Section-->
+             <h2>Section: coming soon...</h2>
+            <!--Base pay-->
+            <label for="baseWage" class="block text-sm font-medium text-gray-700">Base wage</label>
+            <div class="relative mt-1 rounded-md shadow-sm">
+            <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
+            </div>
+            <input type="text" name="baseWage" id="baseWage" value="<%= user.baseWage %>" class="block w-full rounded-md border-gray-300 pl-7 pr-12 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" placeholder=<%= user.baseWage %>>
+            <button id="changeWage" type="button">Change...</button>    
+            </div>
+            <!--Hours Worked-->
+            <label for="hoursWorked" class="block text-sm font-medium text-gray-700">Hours Worked</label>
+            <div class="relative mt-1 rounded-md shadow-sm">
+            <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
+            </div>
+            <input type="text" name="hoursWorked" id="baseWage" class="block w-full rounded-md border-gray-300 pl-7 pr-12 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" placeholder="0">
+            </div>
+            <!--Sales-->
+            <label for="sales" class="block text-sm font-medium text-gray-700">Total Sales</label>
+            <div class="relative mt-1 rounded-md shadow-sm">
+            <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
+                <span class="text-gray-500 sm:text-sm">$</span>
+            </div>
+            <input type="text" name="sales" id="sales" class="block w-full rounded-md border-gray-300 pl-7 pr-12 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" placeholder="0.00">
+            <div class="absolute inset-y-0 right-0 flex items-center">
+                <label for="currency" class="sr-only">Currency</label>
+                <select id="currency" name="currency" class="h-full rounded-md border-transparent bg-transparent py-0 pl-2 pr-7 text-gray-500 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
+                <option>CAD</option>
+                </select>
+            </div>
+            </div>
+            <!--Tips-->
+            <label for="tips" class="block text-sm font-medium text-gray-700">Tips</label>
+            <div class="relative mt-1 rounded-md shadow-sm">
+            <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
+                <span class="text-gray-500 sm:text-sm">$</span>
+            </div>
+            <input type="text" name="tips" id="tips" class="block w-full rounded-md border-gray-300 pl-7 pr-12 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" placeholder="0.00">
+            </div>
+            <!--Tip out-->
+            <label for="tipout" class="block text-sm font-medium text-gray-700">Tip out percentage</label>
+            <div class="relative mt-1 rounded-md shadow-sm">
+            <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
+                <span class="text-gray-500 sm:text-sm">%</span>
+            </div>
+            <input type="text" name="tipout" id="tipout" class="block w-full rounded-md border-gray-300 pl-7 pr-12 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" placeholder="0.00">
+            </div>
+            <!--Submit-->
+            <button id="submitShiftButton" type="submit">Submit</button>
+        </form>
+        <div class="shiftSummary">
+            <h2>Summary:</h2>
+        </div>
+      </div>
+

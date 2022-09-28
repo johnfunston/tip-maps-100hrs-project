@@ -1,0 +1,56 @@
+<%- include('partials/header') -%>
+<% let totalUserEarnings = shifts.reduce((a, v)=> {return a + ((v.hoursWorked * v.wage) + v.tips) - ((v.totalSales * v.tipout)/100)}, 0).toFixed(2) %>
+<div class="dashboard-container">
+    <h1 class="dashboard-title">User Dashboard</h1>
+    <div class="user-stats">
+        <h2 class="user-stats-title">Employment Summary</h2>
+        <div class="total-earnings">
+            <h2>Total Earnings: </h2>
+            <p><%= "$ " + totalUserEarnings %></p>
+        </div>
+        <div class="hours-worked">
+            <h2>Total Hours Worked: </h2>
+            <p><%= shifts.reduce((a, v)=> {return a + v.hoursWorked}, 0).toFixed(2) + " hrs" %></p>
+        </div>
+        <div class="average-hourly">
+            <h2>Average Hourly Earnings:</h2>
+            <p><%= (totalUserEarnings / shifts.reduce((a, v)=> {return a + v.hoursWorked}, 0)).toFixed(2) + " / hr" %></p>
+        </div>
+    </div>
+    <div class="shift-summary">
+        <% for(var i=0; i<shifts.length; i++) { %>
+            <div class="overflow-hidden bg-white shadow sm:rounded-lg">
+                <div class="px-4 py-5 sm:px-6">
+                  <h3 class="text-lg font-medium leading-6 text-gray-900">Shift Summary</h3>
+                  <p class="mt-1 max-w-2xl text-sm text-gray-500"><%= shifts[i].dateWorked %></p>
+                  <span><%= "shift_id: " + shifts[i]._id %></span>
+                </div>
+                <div class="border-t border-gray-200">
+                  <dl>
+                    <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                      <dt class="text-sm font-medium text-gray-500">Hours Worked:</dt>
+                      <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0"><%= shifts[i].hoursWorked.toFixed(2) %></dd>
+                    </div>
+                    <div class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                      <dt class="text-sm font-medium text-gray-500">Total Sales:</dt>
+                      <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0"><%= "$" + shifts[i].totalSales.toFixed(2) %></dd>
+                    </div>
+                    <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                      <dt class="text-sm font-medium text-gray-500">Tips Earned:</dt>
+                      <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0"><%= "$" + shifts[i].tips.toFixed(2) %></dd>
+                    </div>
+                    <div class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                      <dt class="text-sm font-medium text-gray-500">Tip out</dt>
+                      <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0"><%= shifts[i].tipout + "% | " +  " | $" + ((shifts[i].totalSales * shifts[i].tipout) / 100).toFixed(2)  %></dd>
+                    </div>
+                    <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                        <dt class="text-sm font-medium text-gray-500">Shift Earnings:</dt>
+                        <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0"><%= "$" + (((shifts[i].hoursWorked * shifts[i].wage) + shifts[i].tips) - ((shifts[i].totalSales * shifts[i].tipout) / 100)).toFixed(2) %></dd>
+                    </div>
+                  </dl>
+                </div>
+              </div>
+        <% } %>
+    </div>
+    </div>
+</div>
