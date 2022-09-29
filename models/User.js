@@ -8,17 +8,20 @@ const UserSchema = new mongoose.Schema({
    {
     city: {type: String, required: false,},
     country: {type: String, required: false,},
-    region: {type: String, required: false,},        
+    region: {type: String, required: false,},
+    default: false,        
     },
   workplace: {
     address: { type: String, required: false},
     name: { type: String, required: false},
+    default: false,
     },
   baseWage: { type: Number, required: false, default: 0.00,},
   positions: Array,
   savingsGoal: Number,
   firstName: { type: String, unique: false },
   lastName: { type: String, unique: false },
+  analyticsBranch: { type: String },
 });
 
 //alert alert-danger <%= el.msg %>

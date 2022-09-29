@@ -38,7 +38,7 @@ module.exports = {
                 },
                 
               );
-              res.redirect("/profile");
+              res.redirect("/dashboard");
     } catch (err) {
       console.log(err);
     }

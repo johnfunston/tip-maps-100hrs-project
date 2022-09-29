@@ -60,8 +60,8 @@ ________________________________________________________________________________
 Build order:
 
 Wednesday, Sept 28th:
--Make sure that totals for dashboard only pertain to the logged in User
--Make submitShift reroute to dashboard
+-Make sure that totals for dashboard only pertain to the logged in User DONE
+-Make submitShift reroute to dashboard DONE
 -Create savings goal meter
 -Allow ability to update/delete existing shifts for users
 

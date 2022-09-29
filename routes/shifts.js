@@ -4,7 +4,6 @@ const shiftsController = require("../controllers/shifts");
 const { ensureAuth, ensureGuest } = require("../middleware/auth");
 
 router.get("/", ensureAuth, shiftsController.getShiftSubmit)
-
 router.post("/shiftSubmit", ensureAuth, shiftsController.submitShift);
 
 module.exports = router;

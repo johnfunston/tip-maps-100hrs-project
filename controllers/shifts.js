@@ -1,5 +1,5 @@
 const Shift = require('../models/Shift');
-const { shift } = require('../routes/main'); 
+const User = require('../models/User');
 
 module.exports = {
     getShiftSubmit: async (req, res) => {
@@ -24,8 +24,7 @@ module.exports = {
               createdAt: req.params.createdAt,
               break: req.body.break,
             });
-            console.log("Shift data logged successfully");
-            res.redirect("/profile");
+            res.render('updateAnalytics.ejs')
           } catch (err) {
             console.log(err);
           }
