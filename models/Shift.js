@@ -1,14 +1,28 @@
 const mongoose = require("mongoose");
 
 const ShiftSchema = new mongoose.Schema({
+  atWorkplace: {
+    type: String,
+    required: false,
+  },
   dateWorked: {
     type: Date,
     required: true,
-    default: Date.now(),
+    default: Date.now,
   },
   hoursWorked: {
     type: Number,
     required: true,
+  },
+  startTime: {
+    hour: {type: Number},
+    minutes: {type: Number},
+    meridiem: {type: String},
+  },
+  endTime: {
+    hour: {type: Number},
+    minutes: {type: Number},
+    meridiem: {type: String},
   },
   positionWorked: {
     type: String,
@@ -33,15 +47,13 @@ const ShiftSchema = new mongoose.Schema({
   wage: {
     type: Number,
     required: true,
-    default: 0,
   },
-  user: {
+  createdByUser: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",
   },
   section: {
     title: String,
-    tables: Array,
     required: false,
   },
   createdAt: {

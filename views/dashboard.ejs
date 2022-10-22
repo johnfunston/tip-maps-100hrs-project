@@ -1,56 +1,115 @@
-<%- include('partials/header') -%>
-<% let totalUserEarnings = shifts.reduce((a, v)=> {return a + ((v.hoursWorked * v.wage) + v.tips) - ((v.totalSales * v.tipout)/100)}, 0).toFixed(2) %>
-<div class="dashboard-container">
-    <h1 class="dashboard-title">User Dashboard</h1>
-    <div class="user-stats">
-        <h2 class="user-stats-title">Employment Summary</h2>
-        <div class="total-earnings">
-            <h2>Total Earnings: </h2>
-            <p><%= "$ " + totalUserEarnings %></p>
+
+<!--
+      dashboard nav
+      dropdown for period
+      savings progress
+      modules for earnings/hours/tips %
+    -->
+<!DOCTYPE html>
+  <html lang="en" class="h-full bg-gray-50">
+    <head>
+      <meta charset="UTF-8" />
+      <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <title>Tip Maps : Dashboard</title>
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/charts.css/dist/charts.min.css">
+      <link rel="stylesheet" href="/css/dashboardStyles.css" />
+      
+  </head>
+  <body>
+    <% if(ejsUser.employment.workplaces.length === 0) { %>
+      <div class="warningContainer">
+      <div id="noWorkplaceWarning">
+          <h3>No data to display:</h3>
+          <h2><span class="errorMessage">Error: </span>'No workplace data exists for this user'</h2>
+          <a href="/profile"><button className="warning--button">Update workplace</button></a>
         </div>
-        <div class="hours-worked">
-            <h2>Total Hours Worked: </h2>
-            <p><%= shifts.reduce((a, v)=> {return a + v.hoursWorked}, 0).toFixed(2) + " hrs" %></p>
+      </div>
+      <% } else if(ejsShifts.length === 0) { %>
+      <div class="warningContainer">  
+        <div id="noShiftWarning">
+          <h3>No data to display:</h3>
+          <h2><span class="errorMessage">Error: </span>'No shifts exist for this user'</h2>
+          <a href="/shifts"><button class="warning--button shift-warning-button">+ Add Shift</button></a>
         </div>
-        <div class="average-hourly">
-            <h2>Average Hourly Earnings:</h2>
-            <p><%= (totalUserEarnings / shifts.reduce((a, v)=> {return a + v.hoursWorked}, 0)).toFixed(2) + " / hr" %></p>
+      </div>
+      <% } %>
+      <div class="dashboard--container">
+        <div class="dashboard--nav--container">
+          <div class="logo">
+          </div>
+          <div class="user">
+            <a href="/profile">Profile</a>
+          </div>
+          <div class="nav--links">
+            <a href="/">Home</a>
+            <a href="/dashboard/<%= user.id %>" class="selected">Dashboard</a>
+            <a href="/shifts">Shifts</a>
+            <a href="/analytics">Analytics</a>
+            <a href="/calendar">Calendar</a>
+          </div>
+          <div class="logout">
+            <a href="/logout"><button>LOG OUT</button></a>
+          </div>
         </div>
-    </div>
-    <div class="shift-summary">
-        <% for(var i=0; i<shifts.length; i++) { %>
-            <div class="overflow-hidden bg-white shadow sm:rounded-lg">
-                <div class="px-4 py-5 sm:px-6">
-                  <h3 class="text-lg font-medium leading-6 text-gray-900">Shift Summary</h3>
-                  <p class="mt-1 max-w-2xl text-sm text-gray-500"><%= shifts[i].dateWorked %></p>
-                  <span><%= "shift_id: " + shifts[i]._id %></span>
-                </div>
-                <div class="border-t border-gray-200">
-                  <dl>
-                    <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                      <dt class="text-sm font-medium text-gray-500">Hours Worked:</dt>
-                      <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0"><%= shifts[i].hoursWorked.toFixed(2) %></dd>
-                    </div>
-                    <div class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                      <dt class="text-sm font-medium text-gray-500">Total Sales:</dt>
-                      <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0"><%= "$" + shifts[i].totalSales.toFixed(2) %></dd>
-                    </div>
-                    <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                      <dt class="text-sm font-medium text-gray-500">Tips Earned:</dt>
-                      <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0"><%= "$" + shifts[i].tips.toFixed(2) %></dd>
-                    </div>
-                    <div class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                      <dt class="text-sm font-medium text-gray-500">Tip out</dt>
-                      <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0"><%= "$" + ((shifts[i].totalSales * shifts[i].tipout) / 100).toFixed(2) + " (" + shifts[i].tipout +  "%)"   %></dd>
-                    </div>
-                    <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                        <dt class="text-sm font-medium text-gray-500">Shift Earnings:</dt>
-                        <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0"><%= "$" + (((shifts[i].hoursWorked * shifts[i].wage) + shifts[i].tips) - ((shifts[i].totalSales * shifts[i].tipout) / 100)).toFixed(2) %></dd>
-                    </div>
-                  </dl>
-                </div>
+        <div class="dashboard--content--container">
+          <div class="dashboard--keySelectors">
+            <div class="workplace--selector--container">
+              <select class="workplace--selector" name="workplace">
+                <% for(let i=0; i< ejsUser.employment.workplaces.length; i++) { %>
+                  <option><%= ejsUser.employment.workplaces[i].name %></option>
+                  <% } %>
+              </select>
+            </div>
+            <div class="period--selector--container">
+              <select class="period--selector" name="period">
+                <option value="1">Today</option>
+                <option value="7">7 days</option>
+                <option value="30">30 days</option>
+                <option value="365">1 year</option>
+                <option value="all">All time</option>
+              </select>
+            </div>
+          </div>
+          <div class="savingsGoal">
+            <% if(user.savingsGoal === '') { %>
+              <h2>Set a savings goal in the profile tab to track your progress!</h2>
+            <% } else { %> 
+              <h2 class="savingsGoal--title"></h2>
+              <div class="savingsGoal--graphic">
+                <div class="savingsProgress_meter"></div>
+                <p class="progress__percent">0%</p>
               </div>
-        <% } %>
+            <% } %>
+          </div>
+          <div class="periodModule">
+            
+          </div>
+          <div class="periodModule"></div>
+          <div class="periodModule"></div>
+          <div class="periodTracker"></div>
+          <div class="periodModule trackerCompanion">
+            
+          </div>
+        </div>
     </div>
-    </div>
-</div>
+    <script>
+      const user = (<%- user %>)
+      const shifts = (<%- shifts %>)
+      let totalUserEarnings = shifts.reduce((a, v)=> {return a + ((v.hoursWorked * v.wage) + v.tips) - ((v.totalSales * v.tipout)/100)}, 0).toFixed(2)
+      let savingsGoalCompletion = ((totalUserEarnings/user.savingsGoal) * 100).toFixed(2)
+      const savingsGoalGraphic = document.querySelector(".savingsProgress_meter")
+      const savingsGoalPercent = document.querySelector(".progress__percent")
+      const savingsGoalTitle = document.querySelector(".savingsGoal--title")
+      savingsGoalTitle.innerText = `You've earned $${totalUserEarnings} of your $${user.savingsGoal} goal!`
+      savingsGoalGraphic.style.width = `${savingsGoalCompletion}%`
+      savingsGoalPercent.innerText = `${savingsGoalCompletion}%`
+
+
+      let hourlyWage
+      let hoursWorked
+      let averageShiftLength
+      
+    </script>
+  </body>
+</html>

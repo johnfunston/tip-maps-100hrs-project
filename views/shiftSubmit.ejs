@@ -1,29 +1,78 @@
+    
     <%- include('partials/header') -%>
+    <div class="pop-up-window" style="display: none">
+        <div class="pop-up-window--window">
+            <h2>Add new position</h2>
+            <input type="radio" name="newPosition" />
+        </div>
+    </div>
     <div class="pageTitle">
         <h1>Submit New Shift</h1>
     </div>
     <div class="shiftForms">
         <form action="/shifts/shiftSubmit" method="POST" class="submitShiftForm">
+            <div class="relative mt-1 rounded-md shadow-sm">
+                <h2>Workplace</h2> 
+                <% if(user.employment.workplaces.length === 0) { %>
+                    <div>
+                        <p>You haven't added a workplace yet</p>
+                        <button>Add Workplace</button>
+                    </div>
+                <% } else { %>
+                    <input disabled="true" class="disabled block w-full rounded-md border-gray-300 pl-7 pr-12 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" type="text" name="atWorkplace" value="<%= user.employment.workplaces[0].name %>"/>
+                    <% } %>
+            </div>
+            
+            <div class="relative mt-1 rounded-md shadow-sm">
+                <div class="time--input">
+                    <input id="startHour" value="1" name="startHour" type="number"/>
+                    <p class="sm:text-sm"> : </p>
+                    <div class="input-box-minutes">
+                        <span class="prefix-start">0</span>
+                        <input id="startMinutes" value="0" type="number" name="startMinutes" class="block input-sm rounded-md pl-3 pr-3 sm:text-sm" placeholder="00">  
+                    </div>                    <div class="ampm--buttons">
+                    <input type="radio" id="startMeridiemAm" checked="true" name="startMeridiemAm" value="AM" class="ampm-radio-input"><label for="startMeridiemAm">AM</label><input id="startMeridiemPm" class="ampm-radio-input" type="radio" id="child" name="startMeridiemPm" value=""><label for="startMeridiemPm">PM</label>
+                    </div>
+                </div>
+                <div class="time--input">
+                    <input id="endHour" value="1" name="endHour" type="number"/>
+                    <p> : </p>
+                    <div class="input-box-minutes">
+                        <span class="prefix-end">0</span>
+                        <input id="endMinutes" value="0" type="number" name="endMinutes" class="block input-sm rounded-md pl-3 pr-3 sm:text-sm" placeholder="00">  
+                    </div>
+                    <div class="ampm--buttons"></div>
+                    <input type="radio" id="endMeridiemAm" checked="true" name="endMeridiemAm" value="AM" class="ampm-radio-input"><label for="endMeridiemAm">AM</label><input id="endMeridiemPm" class="ampm-radio-input" type="radio" id="child" name="endMeridiemPm" value=""><label for="endMeridiemPm">PM</label>
+                </div>
+                <div class="relative mt-1 rounded-md shadow-sm">
+                    <h2>Shift Length</h2>
+                    <div class="shift-length-input-labels">
+                        <label for="hoursWorked" class="block text-sm font-medium text-gray-700">Hours</label>
+                        <label for="minutesWorked" class="block text-sm font-medium text-gray-700">Minutes</label>
+                    </div>
+                    <div class="shift-length-inputs">
+                        <input id="hoursWorkedInput" type="number" value="" name="hoursWorked" placeholder="--"/>
+                        <input id="minutesWorkedInput" type="number" value="" name="minutesWorked" placeholder="--"/>
+                    </div>
+                </div>
+            </div>
             <!--Postion-->
             <h2>Position</h2>
-            <input type="radio" id="position1" name="position" value="HTML">
-            <label for="position1"><%= user.positions[0] %> (default)</label>
-             <!--Section-->
-             <h2>Section: coming soon...</h2>
+                <% if(user.employment.workplaces.length === 0 || user.employment.workplaces[0].positions.length === 0) { %>
+                    <div>
+                        <p>You haven't added any workplace positions yet</p>
+                        <a href="/profile"><button>Add Position</button></a>
+                    </div>
+                <% } else for(let i=0; i < user.employment.workplaces[0].positions.length; i++){ %>
+                    <input disabled="true" class="disabled block w-full rounded-md border-gray-300 pl-7 pr-12 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" type="text" id="position1" name="positionTitle" value="<%= user.employment.workplaces[0].positions[0].title %>">
+                <% } %>
+                
+            <!--Section-->
             <!--Base pay-->
-            <label for="baseWage" class="block text-sm font-medium text-gray-700">Base wage</label>
-            <div class="relative mt-1 rounded-md shadow-sm">
-            <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
-            </div>
-            <input type="text" name="baseWage" id="baseWage" value="<%= user.baseWage %>" class="block w-full rounded-md border-gray-300 pl-7 pr-12 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" placeholder=<%= user.baseWage %>>
-            <button id="changeWage" type="button">Change...</button>    
-            </div>
-            <!--Hours Worked-->
-            <label for="hoursWorked" class="block text-sm font-medium text-gray-700">Hours Worked</label>
-            <div class="relative mt-1 rounded-md shadow-sm">
-            <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
-            </div>
-            <input type="text" name="hoursWorked" id="baseWage" class="block w-full rounded-md border-gray-300 pl-7 pr-12 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" placeholder="0">
+            <label for="baseWage" class="block text-sm font-medium text-gray-700">Hourly pay</label>
+            <div class="flex mt-1 rounded-md shadow-sm">
+            <input type="text" disabled="true" name="baseWage" id="baseWage" value="<%= user.employment.workplaces[0].positions[0].baseWage %>" class="disabled block w-full rounded-md border-gray-300 pl-7 pr-12 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" placeholder=<%= user.employment.workplaces[0].positions[0].baseWage %>>
+            <a href="/profile"><button id="changeWage" type="button">Change...</button></a>
             </div>
             <!--Sales-->
             <label for="sales" class="block text-sm font-medium text-gray-700">Total Sales</label>
@@ -53,13 +102,129 @@
             <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
                 <span class="text-gray-500 sm:text-sm">%</span>
             </div>
-            <input type="text" name="tipout" id="tipout" class="block w-full rounded-md border-gray-300 pl-7 pr-12 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" placeholder="0.00">
+            <input type="text" name="tipout" value="<%= user.employment.workplaces[0].positions[0].tipout %>" id="tipout" class="block w-full rounded-md border-gray-300 pl-7 pr-12 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" placeholder="0.00">
             </div>
             <!--Submit-->
             <button id="submitShiftButton" type="submit">Submit</button>
         </form>
-        <div class="shiftSummary">
-            <h2>Summary:</h2>
-        </div>
+        <script>
+            const startHour = document.querySelector("#startHour")
+            const startMinutes = document.querySelector("#startMinutes")
+            const startMeridiemAm = document.querySelector("#startMeridiemAm")
+            const startMeridiemPm = document.querySelector("#startMeridiemPm")
+            const endHour = document.querySelector("#endHour")
+            const endMinutes = document.querySelector("#endMinutes")
+            const endMeridiemPm = document.querySelector("#endMeridiemPm")
+            const endMeridiemAm = document.querySelector("#endMeridiemAm")
+            const addPosition = document.querySelector("#addPositionButton")
+            const startTimePrefix = document.querySelector(".prefix-start")
+            const endTimePrefix = document.querySelector(".prefix-end")
+
+            addPosition.addEventListener("click", () => {
+                document.querySelector("body").style.overflow = "hidden"
+                document.querySelector(".pop-up-window").style.display = "block"
+            })
+
+            function setInputs() { 
+                startMinutes.value.text = '0' + startMinutes.value
+                endMinutes.value.text = '0' + endMinutes.value
+            }
+
+            
+            startHour.addEventListener("change", () => {
+                if(startHour.value > 12) {
+                    startHour.value = 1;
+                } else if (startHour.value <= 0) {
+                    startHour.value = 12;
+                }
+                calcTime()
+            })
+            startMinutes.addEventListener("change", () => {
+                startTimePrefix.style.visibility = "hidden"
+                if(startMinutes.value >= 60) {
+                    startMinutes.value = 0
+                } else if (startMinutes.value < 0) {
+                    startMinutes.value = 59;
+                } else if(startMinutes.value < 10) {
+                    startTimePrefix.style.visibility = "visible"
+                } 
+                calcTime()
+            })
+            endHour.addEventListener("change", () => {
+                if(endHour.value > 12) {
+                    endHour.value = 1;
+                } else if (endHour.value <= 0) {
+                    endHour.value = 12;
+                }
+                calcTime()
+            })
+            endMinutes.addEventListener("change", () => {
+                endTimePrefix.style.visibility = "hidden"
+                if(endMinutes.value >= 60) {
+                    endMinutes.value = 0;
+                } else if (endMinutes.value < 0) {
+                    endMinutes.value = 59;
+                } else if(endMinutes.value < 10) {
+                    endTimePrefix.style.visibility = "visible"
+                }
+                console.log(endMinutes.value)
+                calcTime()
+            })
+            startMeridiemAm.addEventListener("click", () => {
+                if(startMeridiemAm.checked = true) {
+                    startMeridiemPm.checked = false
+                    startMeridiemPm.value = ""
+                    startMeridiemAm.value = "AM"
+                    calcTime()
+                }
+            })
+            startMeridiemPm.addEventListener("click", () => {
+                if(startMeridiemPm.checked = true) {
+                    startMeridiemAm.checked = false
+                    startMeridiemPm.value = "PM"
+                    startMeridiemAm.value = ""
+                    calcTime()
+                }
+            })
+            endMeridiemAm.addEventListener("click", () => {
+                if(endMeridiemAm.checked = true) {
+                    endMeridiemPm.checked = false
+                    endMeridiemPm.value = ""
+                    endMeridiemAm.value = "AM"
+                    calcTime()
+                }
+            })
+            endMeridiemPm.addEventListener("click", () => {
+                if(endMeridiemPm.checked = true) {
+                    endMeridiemAm.checked = false
+                    endMeridiemAm.value = ""
+                    endMeridiemPm.value = "PM"
+                    calcTime()
+                }
+            })
+    
+             function calcTime() {
+                let calculatedHours
+                if(startMeridiemAm.value === "AM" && endMeridiemPm.value === "PM"){
+                    totalMinutes = (((12-(startHour.value)) *60) + (60 - startMinutes.value)) + ((endHour.value * 60) + (endMinutes.value - 60))
+                    console.log(totalMinutes)
+                    calculatedHours = (totalMinutes / 60).toFixed(2)
+                } else if(startMeridiemPm.value === "PM" && endMeridiemAm.value === "AM") {
+                    
+                } 
+            }
+
+            const minutesWorkedInput = document.querySelector("#minutesWorkedInput")
+            minutesWorkedInput.addEventListener("change", () => {
+                if(minutesWorkedInput.value >= 60) {
+                    minutesWorkedInput.value = 0
+                } else if (minutesWorkedInput.value < 0) {
+                    minutesWorkedInput.value = 59
+            }
+            })
+
+            setInputs()
+        </script>
       </div>
+      
 

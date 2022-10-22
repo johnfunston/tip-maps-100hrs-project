@@ -5,8 +5,6 @@ const homeController = require("../controllers/home");
 const shiftsController = require("../controllers/shifts");
 const profileController = require("../controllers/profile");
 const dashboardController = require("../controllers/dashboard");
-const mapController = require("../controllers/map");
-const analyticsController = require("../controllers/analytics");
 const { ensureAuth, ensureGuest } = require("../middleware/auth");
 
 //Main Routes - simplified for now
@@ -17,14 +15,11 @@ router.get("/map", ensureAuth, mapController.getMap);
 router.get("/shifts", ensureAuth, shiftsController.getShifts);
 */
 
-router.get("/dashboard", ensureAuth, dashboardController.getDashboard)
-router.put("/updateAnalytics", ensureAuth, analyticsController.updateAnalytics)
-router.get("/initializingAnalytics", ensureAuth, analyticsController.initializeAnalytics)
-router.post("/createUserAnalytics", ensureAuth, analyticsController.createUserAnalytics)
+router.get("/dashboard/:id", ensureAuth, dashboardController.getDashboard)
 router.get("/", homeController.getIndex);
 router.get("/profile", ensureAuth, profileController.getProfile);
-router.get("/userProfile", ensureAuth, profileController.getUserDataForm)
 router.put("/updateUserProfile", ensureAuth, profileController.updateUserProfile)
+router.put("/updateUserEmployment", ensureAuth, profileController.updateUserEmployment)
 router.get("/login", authController.getLogin);
 router.post("/login", authController.postLogin);
 router.get("/logout", authController.logout);

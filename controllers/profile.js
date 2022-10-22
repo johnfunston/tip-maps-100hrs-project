@@ -1,21 +1,46 @@
 const { array } = require("../middleware/multer");
+const { modelName } = require("../models/User");
 const User = require("../models/User");
 
 module.exports = {
     getProfile: async (req, res) => {
         try {
-          res.render("profile.ejs", {user: req.user });
+          res.render("profile.ejs", {stringifiedUser: JSON.stringify(req.user), user: req.user});
         } catch (err) {
           console.log(err);
         }
       },
-      getUserDataForm: async (req, res) => {
+
+    updateUserEmployment: async (req, res) => {
       try {
-        res.render("userInfo.ejs", {user: req.user})
-      } catch (err) {
-        console.log(err);
-      }
-    },
+        await User.findOneAndUpdate(
+            { _id: req.user.id },
+            {
+                employment: {  
+                  workplaces: {
+                    name: req.body.workplaceName,
+                      location: {
+                        address: req.body.workplaceAddress,
+                        zippostal: req.body.workplaceZippostal,
+                        city: req.body.workplaceCity,
+                        region: req.body.workplaceRegion,
+                        country: req.body.workplaceCountry,
+                      },
+                      positions: 
+                        {
+                          title: req.body.positionTitle,
+                          baseWage: req.body.positionBaseWage,
+                          tipout: req.body.positionTipout,
+                        }
+                    }
+                  }
+                });  
+      res.redirect("/profile");
+    } catch (err) {
+      console.log(err);
+    }
+  },
+
     updateUserProfile: async (req, res) => {
         try {
             await User.findOneAndUpdate(
@@ -29,16 +54,10 @@ module.exports = {
                     country: req.body.country,
                     region: req.body.region,   
                     },
-                workplace: {
-                    address: req.body.workplaceAddress,
-                    name: req.body.workplaceName,
-                    },
-                baseWage: req.body.baseWage,
                 savingsGoal: req.body.savingsGoal,
                 },
-                
               );
-              res.redirect("/dashboard");
+              res.redirect("/profile");
     } catch (err) {
       console.log(err);
     }

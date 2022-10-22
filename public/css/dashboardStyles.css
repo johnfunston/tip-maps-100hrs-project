@@ -1,0 +1,171 @@
+@import url('https://fonts.googleapis.com/css2?family=Aboreto&family=Alumni+Sans+Pinstripe:ital@0;1&family=Antic&family=Antic+Didone&family=Bebas+Neue&family=Comfortaa:wght@300&family=Indie+Flower&family=Kanit:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,600;1,700;1,800;1,900&family=Montserrat:wght@300&family=Nunito&family=Playfair+Display+SC:ital,wght@0,700;1,700&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Rubik:wght@600&family=Tangerine:wght@400;700&family=Ubuntu:wght@700&display=swap');
+
+* {
+    margin: 0;
+    box-sizing: border-box;
+    padding: 0;
+    font-family: "Viola", sans-serif;
+}
+
+
+
+.warningContainer {
+    height: 100vh;
+    width: 100vw;
+    z-index: 100;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0, 0, 0, .75);
+    position: absolute;
+}
+
+#noWorkplaceWarning, #noShiftWarning {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    height: 50vh;
+    width: 50vw;
+    border-radius: 25px;
+    background-color: #e6e6e6;
+    border-bottom: 2px solid gray;
+    border-right: 2px solid gray;
+}
+
+#noWorkplaceWarning h3, #noShiftWarning h3 {
+    font-size: 12px;
+}
+
+#noWorkplaceWarning h2, #noShiftWarning h2 {
+    font-size: 36px;
+    margin-bottom: 20px;
+    font-style: italic;
+}
+
+.warning--button {
+    height: 75px;
+    width: 225px;
+    font-size: 32px;
+    background-color: green;
+    border-radius: 25px;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+.errorMessage {
+    color: red;
+    font-style: normal;
+}
+
+.dashboard--container {
+    display: flex;
+    width: 100vw;
+    height: 100vh;
+    font-family: 'Montserrat', sans-serif;
+
+}
+
+.dashboard--nav--container {
+    width: 250px;
+    background-color: blue;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.nav--links {
+    width: 100%;
+    height: 40%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+}
+
+.nav--links a {
+    width: 100%;
+    text-align: right;
+    padding-right: 30px;
+    color: white;
+    text-decoration: none;
+}
+
+.dashboard--content--container {
+    width: 100%;
+    height: 100vh;
+    background-color: white;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-between;
+    padding: 1% 3%;
+}
+
+.dashboard--content--container > * {
+    border-radius: 25px;
+}
+
+.periodTracker, .periodModule, .savingsGoal {
+    background-color: white;
+    border: 1px solid #e6e6e6;
+    box-shadow: 2px 2px 10px -5px rgba(0, 0, 0, .25);
+}
+
+.savingsGoal {
+    display: flex;
+    width: 100%;
+    height: 20%;
+    justify-content: center;
+    padding: 5%;
+    flex-direction: column;
+}
+
+.periodModule {
+    width: 32%;
+    height: 30%;
+}
+
+.periodTracker {
+    width: 74%;
+    height: 40%;
+}
+
+.trackerCompanion {
+    width: 25%;
+    height: 40%;
+}
+
+
+.savingsGoal--graphic {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+}
+
+.savingsProgress_meter {
+    height: 15px;
+    border-bottom: 1px solid #e6e6e6;
+    border-right: 3px solid #e6e6e6;
+    max-width: 100%;
+    background-color: green;
+}
+
+.progress__percent {
+    font-weight: bold;
+    font-size: 46px;
+    align-self: flex-end;
+}
+
+.savingsGoal h2 {
+    width: 100%;
+    font-size: 16px;
+    margin-bottom: 24px;
+
+}
+
+.dashboard--keySelectors {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+
+}

@@ -4,29 +4,37 @@ const mongoose = require("mongoose");
 const UserSchema = new mongoose.Schema({
   email: { type: String, unique: true },
   password: String,
-  location: 
-   {
-    city: {type: String, required: false,},
-    country: {type: String, required: false,},
-    region: {type: String, required: false,},
-    default: false,        
-    },
-  workplace: {
-    address: { type: String, required: false},
-    name: { type: String, required: false},
-    default: false,
-    },
-  baseWage: { type: Number, required: false, default: 0.00,},
-  positions: Array,
-  savingsGoal: Number,
-  firstName: { type: String, unique: false },
-  lastName: { type: String, unique: false },
-  analyticsBranch: { type: String },
+  firstName: { type: String },
+  lastName: { type: String},
+  location: {
+  country: {type: String},
+  region: {type: String},
+  city: {type: String},
+  },
+  savingsGoal: {type: Number, default: 0},
+  employment: {
+    workplaces: [{  
+      name: {type: String},
+      location: {
+        address: {type: String},
+        zippostal: {type: String},
+        city: {type: String},
+        region: {type: String},
+        country: {type: String},
+      },
+      positions: 
+        [{
+          title: {type: String},
+          baseWage: {type: Number},
+          tipout: {type: Number},
+        }]
+      }],
+      sections: [{
+        name: {type: String},
+        tables: {type: Array},
+      }]
+    }  
 });
-
-//alert alert-danger <%= el.msg %>
-//alert alert-info
-// class="h-6 w-6 text-white"
 
 
 // Password hash middleware.
