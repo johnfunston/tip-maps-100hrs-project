@@ -3,7 +3,7 @@ module.exports = {
       if(!req.user) {
         res.redirect("/login")
       } else {
-        res.render("home.ejs", {user: req.user});
+        res.redirect("/dashboard/" + req.user.id);
       }
     },
   };

@@ -1,0 +1,342 @@
+<%- include('partials/header') %>
+<div id="add-shift-container" class="flex-container white row-box h-auto">
+    <div id="add-workplace-pop-up" class="pop-up-screen hidden pad-5">
+        <div id="exit-pop-up" class="absolute">
+            <svg class="white-fill h-24px w-24px m-tb-16px m-lr-16px cursor-pointer" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Pro 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. --><path d="M175 175C184.4 165.7 199.6 165.7 208.1 175L255.1 222.1L303 175C312.4 165.7 327.6 165.7 336.1 175C346.3 184.4 346.3 199.6 336.1 208.1L289.9 255.1L336.1 303C346.3 312.4 346.3 327.6 336.1 336.1C327.6 346.3 312.4 346.3 303 336.1L255.1 289.9L208.1 336.1C199.6 346.3 184.4 346.3 175 336.1C165.7 327.6 165.7 312.4 175 303L222.1 255.1L175 208.1C165.7 199.6 165.7 184.4 175 175V175zM512 256C512 397.4 397.4 512 256 512C114.6 512 0 397.4 0 256C0 114.6 114.6 0 256 0C397.4 0 512 114.6 512 256zM256 48C141.1 48 48 141.1 48 256C48 370.9 141.1 464 256 464C370.9 464 464 370.9 464 256C464 141.1 370.9 48 256 48z"/></svg>
+        </div>
+        <div class="white component-shadow rnd-25 pad-16px h-auto w-auto">
+            <h1 class="pad-24px">Add new Workplace/Position</h1>
+            <form action="/updateWorkplace" class="flex-container column-box space-flow w-auto h-auto">
+                    <div id="existing-workplace-form" class="flex-container column-wrap center-stack space-flow">
+                        <h2 class="txt-bolder w-auto">Existing workplace: </h2>
+                        <select class="rnd-5 pad-lr-4px w-auto" name="existingWorkplace" value="">
+                            <option selected>The Keg Steakhouse</option>
+                        </select>
+                        <p>-- OR --</p>
+                        <button id="add-new-workplace-button" class="btn-contain txt-white btn-md btn-thin rnd-25" type="button">Add new</button>
+                    </div>
+                    <div id="new-workplace-form" class="flex-container column-box hidden">
+                        <h2 class="w-auto txt-bolder">New workplace: </h2>
+                        <div class="flex-container column-box w-auto">
+                            <label class="" for="newWorkplaceName">Workplace name: </label>
+                            <input class="rnd-5" name="newWorkplaceName" value="" />
+                            <label class="" for="newWorkplaceAddress">Address: </label>
+                            <input class="rnd-5" name="newWorkplaceAddress" value=""/>
+                        </div>  
+                        <div class="flex-container space-flow">
+                            <div class="flex-container column-box w-33">
+                                <label class="" for="newWorkplaceName">City: </label>
+                                <input class="rnd-5" class="w-50 rnd-5" name="newWorkplaceCity" value="" />
+                            </div>
+                            <div class="flex-container column-box w-33 pad-lr-4px">
+                            <label class="" for="newWorkplaceName">State/Province: </label>
+                            <input class="rnd-5" name="newWorkplaceRegion" value="" />
+                            </div>
+                            <div class="flex-container column-box w-33">
+                            <label class="" for="newWorkplaceZippostal">ZIP/Postal: </label>
+                            <input class="rnd-5" name="newWorkplaceZippostal" value="" />
+                            </div>  
+                        </div>
+                        <div class="flex-container column-box w-auto">
+                            <label for="newWorkplaceName">Country: </label>
+                            <input class="rnd-5" name="newWorkplaceCountry" value="" />
+                        </div>
+                    </div>
+                    <div id="new-position-tipout-input" class="flex-container column-box">
+                        <div class="flex-container column-box w-auto">
+                            <label for="newWorkplaceName">Position title: </label>
+                            <input class="m-r-4px rnd-5" name="newPositionTitle" value="" />
+                        </div>
+                        <div class="flex-container w-auto">
+                            <div class="flex-container column-box w-50">
+                                <label for="newWorkplaceName">Hourly wage: </label>
+                                <input class="m-r-4px rnd-5" name="newHourlyWage" value="" />
+                            </div>
+                            <div class="flex-container column-box w-50">
+                                <label for="newWorkplaceName">Tipout: </label>
+                                <input class="m-l-4px m-r-4px rnd-5" name="newTipout" value="" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex-container w-auto space-flow pad-24px">
+                        <button id="pop-up-cancel-button" style="background-color: red" type="button" class="btn-md btn-contain rnd-25">Cancel</button>
+                        <button style="background-color: green" type="submit" class="btn-md btn-contain rnd-25">Submit</button>
+                    </div>  
+            </form>
+        </div>
+    </div>
+    <div class="flex-container pad-1 column-box w-50 h-auto"> 
+        <h1 class="txt-bolder">Add shift</h1>
+        <form id="add-shift-form" action="shifts/addshift" method="POST" class="flex-container pad-16px column-box gray space-flow rnd-5 h-100vh w-auto component-shadow">
+                <div class="flex-container row-box pad-8px pad-tb-24px space-flow bottom-border">
+                    <div class="flex-container column-box w-33">
+                        <label for="atWorkplace" class="txt-bold">Workplace</label>
+                        <select id="workplace-name-input"  disabled="true" class="rnd-5 pad-lr-4px  disabled-input" name="atWorkplace">
+                            <option selected>The Keg Steakhouse</option>
+                        </select>
+                    </div>
+                    <div class="flex-container column-box w-33">
+                        <label for="positionWorked" class="txt-bold">Position</label>
+                        <select id="workplace-position-input"  disabled="true" class="rnd-5 pad-lr-4px disabled-input" name="positionWorked">
+                            <option selected>Server</option>
+                        </select>                
+                    </div>
+                    <div class="flex-container column-box end-stack bottom-flow w-25">
+                        <button id="enable-workplaceInfo-input" type="button" class="flex-container center-stack center-flow btn-md btn-thinner btn-outline rnd-25 btn-red">Edit</button>                 
+                        <button id="add-workplace-button" type="button" class="flex-container hidden absolute center-stack center-flow btn-md btn-thinner btn-outline rnd-25 btn-green">+ Add</button>                 
+                    </div>
+                </div>  
+                <div class="flex-container column-box pad-8px">
+                    <label for="dateWorked" class="txt-bold">Shift date</label>
+                    <input id="date-picker" class="rnd-5 pad-lr-4px w-33" name="dateWorked" type="date"/>
+                    <p id="invalid-date-warning" class="txt-red hidden flex-container pad-tb-4px">
+                        <svg class="h-16px w-16px m-l-4px m-r-4px red-fill" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Pro 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. --><path d="M256 512c141.4 0 256-114.6 256-256S397.4 0 256 0S0 114.6 0 256S114.6 512 256 512zm0-384c13.3 0 24 10.7 24 24V264c0 13.3-10.7 24-24 24s-24-10.7-24-24V152c0-13.3 10.7-24 24-24zm32 224c0 17.7-14.3 32-32 32s-32-14.3-32-32s14.3-32 32-32s32 14.3 32 32z"/></svg>
+                        Please select a valid shift date.
+                    </p>
+                </div>
+                <div class="flex-container row-box row-wrap pad-8px space-flow pad-tb-24px bottom-border">
+                    <div class="flex-container column-box w-33">
+                        <label for="startTime" class="txt-bold">Start time</label>
+                        <input id="startTime" class="rnd-5 pad-lr-4px" name="startTime" type="datetime-local"/>
+                    </div>
+                    <div class="flex-container column-box w-33">
+                        <label for="endTime" class="txt-bold">End time</label>
+                        <input id="endTime" class="rnd-5 pad-lr-4px" name="endTime" type="datetime-local"/>
+                    </div>
+                    <div class="flex-container column-box w-15">
+                        <label for="hoursWorked" class="txt-bold">Shift length</label>
+                        <div class="flex-container row-box center-stack">
+                            <input id="shiftLength" readonly class="rnd-5 disabled-input pad-lr-4px" name="hoursWorked" type="number" value="" placeholder="0"/>
+                        </div>
+                    </div>
+                    <div class="flex-container column-box w-75 pad-tb-4px">
+                        <p id="short-shift-warning" class="absolute hidden txt-red flex-container pad-tb-4px">
+                            <svg class="h-16px w-16px m-l-4px m-r-4px red-fill" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Pro 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. --><path d="M256 512c141.4 0 256-114.6 256-256S397.4 0 256 0S0 114.6 0 256S114.6 512 256 512zm0-384c13.3 0 24 10.7 24 24V264c0 13.3-10.7 24-24 24s-24-10.7-24-24V152c0-13.3 10.7-24 24-24zm32 224c0 17.7-14.3 32-32 32s-32-14.3-32-32s14.3-32 32-32s32 14.3 32 32z"/></svg>
+                            Short shift! Please check your AM and PM settings to ensure accuracy.
+                        </p>
+                        <p id="long-shift-warning" class="absolute hidden w-auto txt-red flex-container pad-tb-4px">                            
+                            <svg class="h-16px w-16px m-l-4px m-r-4px red-fill" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Pro 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. --><path d="M256 512c141.4 0 256-114.6 256-256S397.4 0 256 0S0 114.6 0 256S114.6 512 256 512zm0-384c13.3 0 24 10.7 24 24V264c0 13.3-10.7 24-24 24s-24-10.7-24-24V152c0-13.3 10.7-24 24-24zm32 224c0 17.7-14.3 32-32 32s-32-14.3-32-32s14.3-32 32-32s32 14.3 32 32z"/></svg>
+                            Long shift! Please check your start/end dates to ensure accuracy.
+                        </p>
+                        <p id="invalid-shift-warning" class="absolute hidden txt-red flex-container pad-tb-4px">
+                            <svg class="h-16px w-16px m-l-4px m-r-4px red-fill" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Pro 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. --><path d="M256 512c141.4 0 256-114.6 256-256S397.4 0 256 0S0 114.6 0 256S114.6 512 256 512zm0-384c13.3 0 24 10.7 24 24V264c0 13.3-10.7 24-24 24s-24-10.7-24-24V152c0-13.3 10.7-24 24-24zm32 224c0 17.7-14.3 32-32 32s-32-14.3-32-32s14.3-32 32-32s32 14.3 32 32z"/></svg>
+                            Please verify that your start date and end date are correct.
+                        </p>
+                    </div>
+                </div>
+                <div class="flex-container column-box pad-8px">
+                    <label for="section" class="txt-bold">Section</label>
+                    <select class="rnd-5 pad-lr-4px w-33" name="section">
+                        <option>High tops</option>
+                        <option>Lounge (1)</option>
+                        <option selected>Open/Windows</option>
+                    </select>
+                </div>
+                <div class="flex-container row-box pad-8px space-flow">
+                    <div class="flex-container column-box w-33">
+                        <label for="totalSales" class="txt-bold">Sales (w/Tax)</label>
+                        <input class="rnd-5 pad-lr-4px" name="totalSales" value=""/>
+                    </div>
+                    <div class="flex-container column-box w-33">
+                        <label for="tips" class="txt-bold">Tips</label>
+                        <input class="rnd-5 pad-lr-4px" name="tips" value=""/>
+                    </div>
+                </div>
+                <div class="flex-container row-box pad-8px space-flow bottom-border">
+                    <div class="flex-container column-box w-25">
+                        <label for="baseWage" class="txt-bold">Hourly wage</label>
+                        <input id="hourly-wage-input" readonly class="rnd-5 pad-lr-4px disabled-input" type="number" name="baseWage" value="15.75" placeholder="15.75"/>
+                    </div>
+                    <div class="flex-container column-box w-25 bottom-flow start-stack">
+                        <button id="enable-hourlyWage-input" type="button" class="btn-outline btn-red btn-thinner btn-md rnd-25">Edit</button>
+                    </div>
+                    <div class="flex-container column-box w-10">
+                        <label for="tipout" class="txt-bold">Tipout</label>
+                        <input id="tipout-input" readonly class="rnd-5 pad-lr-4px disabled-input" name="tipout" value="4.5" placeholder="4.5"/>
+                    </div>
+                    <div class="flex-container column-box w-25 bottom-flow start-stack">
+                        <button id="enable-tipout-input" type="button" class="btn-outline btn-red btn-thinner btn-md rnd-25">Edit</button>
+                    </div>
+                </div>
+                <div class="flex-container row-box space-flow">
+                    <div class="flex-container column-box h-auto w-50">
+                        <label for="comments" class="txt-bold h-25">Add a note:</label>
+                        <textarea id="shift-comments-textbox" style="resize: none" class="rnd-5 h-75 w-auto scroll-y" name="comments"></textarea>
+                        <input id="comment-text" type="text" class="hidden" name="comment" value=""/>
+                    </div>
+                    <div class="flex-container column-box h-auto">
+                        <div class="flex-container column-box h-50 w-auto pad-tb-8px">
+                            <label for="shiftRating" class="txt-bold pad-tb-4px">How would you rate your shift today?</label>
+                            <div class="flex-container w-auto row-box even-flow">
+                                <svg class="rating-svg h-24px w-24px red-fill cursor-pointer" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Pro 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. --><path d="M352 493.4c-29.6 12-62.1 18.6-96 18.6s-66.4-6.6-96-18.6V288c0-8.8-7.2-16-16-16s-16 7.2-16 16V477.8C51.5 433.5 0 350.8 0 256C0 114.6 114.6 0 256 0S512 114.6 512 256c0 94.8-51.5 177.5-128 221.8V288c0-8.8-7.2-16-16-16s-16 7.2-16 16V493.4zM195.2 233.6c5.3 7.1 15.3 8.5 22.4 3.2s8.5-15.3 3.2-22.4c-30.4-40.5-91.2-40.5-121.6 0c-5.3 7.1-3.9 17.1 3.2 22.4s17.1 3.9 22.4-3.2c17.6-23.5 52.8-23.5 70.4 0zm121.6 0c17.6-23.5 52.8-23.5 70.4 0c5.3 7.1 15.3 8.5 22.4 3.2s8.5-15.3 3.2-22.4c-30.4-40.5-91.2-40.5-121.6 0c-5.3 7.1-3.9 17.1 3.2 22.4s17.1 3.9 22.4-3.2zM208 336v32c0 26.5 21.5 48 48 48s48-21.5 48-48V336c0-26.5-21.5-48-48-48s-48 21.5-48 48z"/></svg>
+                                <svg class="rating-svg h-24px w-24px cursor-pointer" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Pro 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. --><path d="M256 512c141.4 0 256-114.6 256-256S397.4 0 256 0S0 114.6 0 256S114.6 512 256 512zM159.3 388.7c-2.6 8.4-11.6 13.2-20 10.5s-13.2-11.6-10.5-20C145.2 326.1 196.3 288 256 288s110.8 38.1 127.3 91.3c2.6 8.4-2.1 17.4-10.5 20s-17.4-2.1-20-10.5C340.5 349.4 302.1 320 256 320s-84.5 29.4-96.7 68.7zM208.4 208c0 17.7-14.3 32-32 32s-32-14.3-32-32s14.3-32 32-32s32 14.3 32 32zm128 32c-17.7 0-32-14.3-32-32s14.3-32 32-32s32 14.3 32 32s-14.3 32-32 32z"/></svg>
+                                <svg class="rating-svg h-24px w-24px navy-fill cursor-pointer" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Pro 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. --><path d="M256 512c141.4 0 256-114.6 256-256S397.4 0 256 0S0 114.6 0 256S114.6 512 256 512zM176.4 240c-17.7 0-32-14.3-32-32s14.3-32 32-32s32 14.3 32 32s-14.3 32-32 32zm192-32c0 17.7-14.3 32-32 32s-32-14.3-32-32s14.3-32 32-32s32 14.3 32 32zM160 336H352c8.8 0 16 7.2 16 16s-7.2 16-16 16H160c-8.8 0-16-7.2-16-16s7.2-16 16-16z"/></svg>
+                                <svg class="rating-svg h-24px w-24px cursor-pointer" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Pro 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. --><path d="M256 512c141.4 0 256-114.6 256-256S397.4 0 256 0S0 114.6 0 256S114.6 512 256 512zM164.1 325.5C182 346.2 212.6 368 256 368s74-21.8 91.9-42.5c5.8-6.7 15.9-7.4 22.6-1.6s7.4 15.9 1.6 22.6C349.8 372.1 311.1 400 256 400s-93.8-27.9-116.1-53.5c-5.8-6.7-5.1-16.8 1.6-22.6s16.8-5.1 22.6 1.6zm53.5-96.7l0 0 0 0-.2-.2c-.2-.2-.4-.5-.7-.9c-.6-.8-1.6-2-2.8-3.4c-2.5-2.8-6-6.6-10.2-10.3c-8.8-7.8-18.8-14-27.7-14s-18.9 6.2-27.7 14c-4.2 3.7-7.7 7.5-10.2 10.3c-1.2 1.4-2.2 2.6-2.8 3.4c-.3 .4-.6 .7-.7 .9l-.2 .2 0 0 0 0 0 0c-2.1 2.8-5.7 3.9-8.9 2.8s-5.5-4.1-5.5-7.6c0-17.9 6.7-35.6 16.6-48.8c9.8-13 23.9-23.2 39.4-23.2s29.6 10.2 39.4 23.2c9.9 13.2 16.6 30.9 16.6 48.8c0 3.4-2.2 6.5-5.5 7.6s-6.9 0-8.9-2.8l0 0 0 0zm160 0l0 0-.2-.2c-.2-.2-.4-.5-.7-.9c-.6-.8-1.6-2-2.8-3.4c-2.5-2.8-6-6.6-10.2-10.3c-8.8-7.8-18.8-14-27.7-14s-18.9 6.2-27.7 14c-4.2 3.7-7.7 7.5-10.2 10.3c-1.2 1.4-2.2 2.6-2.8 3.4c-.3 .4-.6 .7-.7 .9l-.2 .2 0 0 0 0 0 0c-2.1 2.8-5.7 3.9-8.9 2.8s-5.5-4.1-5.5-7.6c0-17.9 6.7-35.6 16.6-48.8c9.8-13 23.9-23.2 39.4-23.2s29.6 10.2 39.4 23.2c9.9 13.2 16.6 30.9 16.6 48.8c0 3.4-2.2 6.5-5.5 7.6s-6.9 0-8.9-2.8l0 0 0 0 0 0z"/></svg>
+                                <svg class="rating-svg h-24px w-24px green-fill cursor-pointer" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Pro 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. --><path d="M256 512c141.4 0 256-114.6 256-256S397.4 0 256 0S0 114.6 0 256S114.6 512 256 512zM383.8 317.8c12.3-3.7 24.3 7 19.2 18.7c-24.5 56.9-81.1 96.7-147 96.7s-122.5-39.8-147-96.7c-5.1-11.8 6.9-22.4 19.2-18.7C166.7 329.4 210.1 336 256 336s89.3-6.6 127.8-18.2zM199.3 129.1c17.8 4.8 28.4 23.1 23.6 40.8l-17.4 65c-2.3 8.5-11.1 13.6-19.6 11.3l-65.1-17.4c-17.8-4.8-28.4-23.1-23.6-40.8s23.1-28.4 40.8-23.6l16.1 4.3 4.3-16.1c4.8-17.8 23.1-28.4 40.8-23.6zm154.3 23.6l4.3 16.1 16.1-4.3c17.8-4.8 36.1 5.8 40.8 23.6s-5.8 36.1-23.6 40.8l-65.1 17.4c-8.5 2.3-17.3-2.8-19.6-11.3l-17.4-65c-4.8-17.8 5.8-36.1 23.6-40.8s36.1 5.8 40.9 23.6z"/></svg>
+                                <input id="shift-rating" style="display: none" value="" name="shiftRating"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+               
+            </div>
+        <div class="pad-1 h-auto w-50 flex-container column-box center-stack">
+            <img class="h-75 w-auto" src="/imgs/add-shift-decal3.jpg" alt=""/>
+            <div class="flex-container column-box h-25 w-90 bottom-flow center-stack ">
+                <button id="submit-shift-button" type="submit" class="btn-contain txt-white btn-thin w-90 rnd-5">SUBMIT</button>
+            </div>
+        </div>
+        </form>
+    </div>
+</div>
+<script>
+
+    const startTime = document.getElementById("startTime")
+    const endTime = document.getElementById("endTime")
+    const shiftLength = document.getElementById("shiftLength")
+    const invalidShiftWarning = document.getElementById("invalid-shift-warning")
+    const shortShiftWarning = document.getElementById("short-shift-warning")
+    const longShiftWarning = document.getElementById("long-shift-warning")
+    const unselectedShiftWarning = document.getElementById("unselected-shift-warning");
+    const datePicker = document.getElementById("date-picker")
+    const invalidDateWarning = document.getElementById("invalid-date-warning")
+    const tipoutButton = document.getElementById("enable-tipout-input")
+    const tipoutInput = document.getElementById("tipout-input")
+    const workplaceInfoButton = document.getElementById("enable-workplaceInfo-input")
+    const hourlyWageButton = document.getElementById("enable-hourlyWage-input")
+    const hourlyWageInput = document.getElementById("hourly-wage-input")
+    const workplaceNameInput = document.getElementById("workplace-name-input")
+    const workplacePositionInput = document.getElementById("workplace-position-input")
+    const addWorkplaceButton = document.getElementById("add-workplace-button")
+    const addWorkplacePopup = document.getElementById("add-workplace-pop-up")
+    const newWorkplaceForm = document.getElementById("new-workplace-form")
+    const addNewWorkplaceButton = document.getElementById("add-new-workplace-button")
+    const existingWorkplaceForm = document.getElementById("existing-workplace-form")
+    const newPosition = document.getElementById("new-position-tipout-input")
+    const closePopUp = document.getElementById("exit-pop-up")
+    const popUpCancelButton = document.getElementById("pop-up-cancel-button")
+    const shiftCommentsTextbox = document.getElementById("shift-comments-textbox")
+    const shiftComment = document.getElementById("comment-text")
+   
+   
+    shiftCommentsTextbox.addEventListener("change", setCommentText)
+    endTime.addEventListener("change", getTimeDifference)
+    startTime.addEventListener("change", getTimeDifference)
+    datePicker.addEventListener("change", ensureAccurateDate)
+    const ratings = Array.from(document.querySelectorAll(".rating-svg"))
+    ratings.forEach((rating, i) => {
+        rating.addEventListener("click", selectRating)
+    })
+
+    closePopUp.addEventListener("click", () => {
+        addWorkplacePopup.classList.add("hidden")
+        newWorkplaceForm.classList.add("hidden")
+        existingWorkplaceForm.classList.remove("hidden")
+    })
+    addWorkplaceButton.addEventListener("click", () => {
+        addWorkplacePopup.classList.remove("hidden")
+        
+    })
+    addNewWorkplaceButton.addEventListener("click", () => {
+        newWorkplaceForm.classList.remove("hidden")
+        existingWorkplaceForm.classList.add("hidden")
+    })
+    popUpCancelButton.addEventListener("click", () => {
+        if(newWorkplaceForm.classList.contains("hidden")) {
+            addWorkplacePopup.classList.add("hidden")
+        } else {
+            newWorkplaceForm.classList.add("hidden")
+            existingWorkplaceForm.classList.remove("hidden")
+        }
+    })
+
+    function setCommentText() {
+        console.log(shiftCommentsTextbox.value)
+        shiftComment.value = shiftCommentsTextbox.value
+    }
+
+    function selectRating(e) {
+        ratings.forEach(rating => {
+            rating.style.backgroundColor = "transparent"
+            rating.style.height = "24px"
+            rating.style.width = "24px"
+        })
+        this.style.backgroundColor = "rgb(255, 203, 101)"
+        this.style.height = "32px"
+        this.style.width = "32px"
+        const selected = ratings.indexOf(this)
+        document.getElementById("shift-rating").value = selected + 1
+    }
+
+
+    hourlyWageButton.addEventListener("click", (e) => {
+        e.target.classList.add("hidden")
+        hourlyWageInput.classList.remove("disabled-input")
+        hourlyWageInput.disabled = false
+        hourlyWageInput.value = ""
+        hourlyWageInput.placeholder = "0.00"
+
+    })
+    workplaceInfoButton.addEventListener("click", (e) => {
+        e.target.classList.add("hidden")
+        addWorkplaceButton.classList.remove("hidden")
+        workplaceNameInput.classList.remove("disabled-input")
+        workplaceNameInput.disabled = false
+        workplacePositionInput.classList.remove("disabled-input")
+        workplacePositionInput.disabled = false
+
+    })
+    tipoutButton.addEventListener("click", (e) => {
+        e.target.classList.add("hidden")
+        tipoutInput.classList.remove("disabled-input")
+        tipoutInput.disabled = false
+        tipoutInput.value = ""
+        tipoutInput.placeholder = "0"
+
+    })
+
+
+    function ensureAccurateDate() {
+        const selectedDate = new Date(datePicker.value)
+        let currentDate = new Date(Date.now())
+        if(Math.abs(currentDate) < Math.abs(selectedDate)) {
+            invalidDateWarning.classList.remove("hidden")
+        } else {
+            invalidDateWarning.classList.add("hidden")
+        }
+    }
+
+    function getTimeDifference() {
+        const date1 = new Date(startTime.value)
+        const date2 = new Date(endTime.value)
+        
+
+        console.log(Math.abs(date1), Math.abs(date2))
+        if(Math.abs(date2) < Math.abs(date1)){
+            shiftLength.value = ""
+            shiftLength.placeholder = "Invalid timeframe"
+            shiftLength.style.border = "2px solid #990000"
+            longShiftWarning.classList.add("hidden")
+            shortShiftWarning.classList.add("hidden")
+            invalidShiftWarning.classList.remove("hidden")
+        } else {
+        const time = Math.abs(date2-date1)
+        shiftLength.value = (time/1000/60/60).toFixed(2)
+             if(time/1000/60/60 > 12) {
+                longShiftWarning.classList.remove("hidden")
+                shortShiftWarning.classList.add("hidden")
+                invalidShiftWarning.classList.add("hidden")
+            } else if(time/1000/60/60 < 3) {
+                shortShiftWarning.classList.remove("hidden")
+                longShiftWarning.classList.add("hidden")
+                invalidShiftWarning.classList.add("hidden")
+            } else {
+                longShiftWarning.classList.add("hidden")
+                shortShiftWarning.classList.add("hidden")
+                invalidShiftWarning.classList.add("hidden")
+                shiftLength.style.border = "none"
+            }
+        }
+        console.log(shiftLength.value)
+    }
+</script>

@@ -13,6 +13,10 @@
     background-color: #e6e6e6;
 }
 
+.white {
+    background-color: #FFF;
+}
+
 .yellow {
     background-color: rgb(255, 203, 101);
 }
@@ -57,8 +61,37 @@
     fill: #fff;
 }
 
+#exit-pop-up {
+    top: 0;
+    right: 0;
+}
+
+.pop-up-screen {
+    position: absolute;
+    z-index: 100;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(0, 0, 0, .75);
+    height: 100vh;
+    width: 100vw;
+}
+
+
 .red-fill {
     fill: #990000;
+}
+
+.txt-green {
+    color:rgb(0, 135, 120);
+}
+
+.txt-red {
+    color: #990000;
 }
 
 .orange {
@@ -77,6 +110,27 @@
 /* ================================================================= */
 /*Measurements*/
 /* ================================================================= */
+#submit-shift-button {
+    background-color: rgb(0, 135, 120);
+    color: white;
+}
+
+#add-workplace-pop-up {
+    z-index: 100;
+}
+
+#add-shift-container {
+    height: 100vh;
+    width: 100vw;
+
+
+}
+
+
+
+
+
+
 
 * {
     margin: 0;
@@ -97,6 +151,11 @@ body {
 
 .calced-width {
     width: calc(100% - 400px)
+}
+
+.rating-svg {
+    padding: 2px;
+    border-radius: 25px;
 }
 
 .svg-hover:hover {
@@ -123,12 +182,6 @@ body {
     border-top-right-radius: 25px ;
 }
 
-#dashboard-nav {
-    border-right: 1px solid #d3d3d3;
-}
-
-#dashboard-sidebar {
-}
 
 #add-shift-button:hover {
     transform: scale(1.1);
@@ -147,6 +200,9 @@ body {
 #savings-goal-container {
     
 }
+
+
+
 
 #sidebar-gradient {
     position: absolute;
@@ -175,16 +231,55 @@ body {
     overflow-y: scroll;
 }
 
+.m-lr-16px {
+    margin-left: 16px;
+    margin-right: 16px;
+}
+
 .m-tb-8px {
-    margin: 8px 0;
+    margin-top: 8px;
+    margin-bottom: 8px;
+}
+
+.m-tb-16px {
+    margin-top: 16px;
+    margin-bottom: 16px;
+}
+
+.h-95vh {
+    height: 95vh;
 }
 
 .w-24px {
     width: 24px;
 }
 
+.w-full {
+    width: 100vw;
+}
+.h-10vh {
+    height: 10vh;
+}
+
+.h-full {
+    height: 100vh;
+}
+
 .h-24px {
     height: 24px;
+}
+
+.h-32px {
+    height: 32px;
+}
+
+.w-32px {
+    width: 32px;
+
+}
+
+.w-100vw {
+    width: 100vw;
 }
 
 .w-48px {
@@ -205,6 +300,18 @@ body {
 
 .w-300px {
     width: 300px;
+}
+
+.w-90 {
+    width: 90%;
+}
+
+.h-5vh {
+    height: 5vh;
+}
+
+.w-100vw {
+    width: 100vw;
 }
 
 .w-100px {
@@ -248,6 +355,10 @@ body {
     height: 60%;
  }
 
+ .align-end {
+    align-self: flex-end;
+ }
+
  .h-15 {
     height: 15%;
  }
@@ -276,6 +387,10 @@ body {
     height: 75%;
  }
 
+ .h-90 {
+    height: 90%;
+ }
+
  .h-100vh {
     height: 100vh;
  }
@@ -287,6 +402,15 @@ body {
  .h-50 {
      height: 50%;
  }
+
+ .h-8px {
+    height: 8px;
+ }
+
+ .h-16px {
+    height: 16px;
+ }
+
 
  .h-32px {
     height: 24px;
@@ -310,6 +434,10 @@ body {
 
  .pad-8px {
     padding: 8px;
+ }
+
+ .pad-16px {
+    padding: 16px;
  }
 
  .pad-24px {
@@ -380,10 +508,69 @@ body {
     padding: 48px 0;
 }
 
+.z-200 {
+    z-index: 200;
+}
+
+@keyframes loading {
+    0% {
+        width: 0%;
+        border-bottom: 3px solid #990000;
+        height: 5px;
+        background-color: #990000;
+    } 25% {
+        width: 100%;
+        border-bottom: 3px solid #990000;
+        height: 5px;
+        background-color: #990000;
+    } 50% {
+        width: 100%;
+        background-color: rgba(255, 255, 255, .5);
+    } 100% {
+        width: 100%;
+        height: 100%;
+        background-color: rgba(255, 255, 255, 0);
+    }
+}
+
+.txt-right {
+    text-align: right;
+}
+
  /* ================================================================= */
  /*Cointainers*/
  /* ================================================================= */
- 
+ .absolute {
+    position: absolute;
+ }
+
+ .flex-1 {
+    flex: 1;
+ }
+
+ .flex-half {
+    flex: 0.5;
+ }
+
+ .flex-third {
+    flex: .3333;
+ }
+
+.flex-3qtr {
+    flex: .75;
+}
+
+ .flex-qtr {
+    flex: 0.25;
+ }
+
+.column-wrap {
+    flex-flow: column wrap;
+}
+
+ .row-wrap {
+    flex-flow: row wrap;
+ }
  
  .flex-container {
      display: flex;
@@ -395,6 +582,14 @@ body {
  
  .row-box {
      flex-direction: row;
+ }
+
+ .fixed {
+    position: fixed;
+ }
+
+ .bottom {
+    bottom: 25%;
  }
  
  .even-flow {
@@ -408,9 +603,25 @@ body {
  .center-flow {
      justify-content: center;
  }
+
+ .bottom-flow {
+    justify-content: flex-end;
+ }
+
+ .top-flow {
+    justify-content: flex-start;
+ }
+
+ .start-stack {
+    align-items: flex-start;
+ }
  
  .even-stack {
      align-items: space-evenly;
+ }
+
+ .end-stack {
+    align-items: flex-end;
  }
  
  .space-stack {
@@ -420,10 +631,13 @@ body {
  .center-stack {
      align-items: center;
  }
+
+ #add-new-workplace-button {
+    background-color: rgb(0, 135, 120);
+ }
  
-.bkgr-red {
-    background-color: red;
-}
+
+
 
  /* ================================================================= */
  /*Components*/
@@ -443,7 +657,7 @@ body {
 
 .btn-outline {
     background-color: transparent;
-    border: 4px solid;
+    border: 3px solid;
 }
 
 .btn-green {
@@ -460,51 +674,63 @@ body {
     background-color: rgba(0, 0, 0, .05);
 }
 
+.disabled-input {
+    opacity: 50%;
+}
+
+.bottom-border {
+    border-bottom: 1px solid white;
+}
+
 button {
     cursor: pointer;
 }
 
- .btn-contain {
-     color: white;
-     border: none;
- }
+.btn-contain {
+    color: white;
+    border: none;
+}
 
- .btn-thin {
-    height: 48px;
- }
+.btn-thin {
+height: 48px;
+}
 
- .btn-thick {
-    height: 96px;
- }
+.btn-thinner {
+height: 24px;
+}
 
- .btn-ultrawide {
-    width: 100%;
- }
+.btn-thick {
+height: 96px;
+}
 
- .btn-wide {
-    width: 248px;
- }
+.btn-ultrawide {
+width: 100%;
+}
 
- .btn-md {
-    width: 96px;
- }
+.btn-wide {
+width: 248px;
+}
+
+.btn-md {
+width: 96px;
+}
 
 
- .btn-contain:hover {
-    filter: brightness(90%)
- }
+.btn-contain:hover {
+filter: brightness(90%)
+}
 
- .rnd-5 {
-    border-radius: 5px;
- }
+.rnd-5 {
+border-radius: 5px;
+}
 
- .circular {
-    border-radius: 50%;
- }
+.circular {
+border-radius: 50%;
+}
 
- .rnd-25 {
-    border-radius: 25px;
- }
+.rnd-25 {
+border-radius: 25px;
+}
 
  /* Inputs */
 
@@ -513,8 +739,12 @@ button {
     width: auto;
     text-align: right;
     padding-right: 8px;
+    border: 1px solid rgb(0, 45, 78);
  }
 
+.pointer-cursor {
+    cursor: pointer;
+}
 
  option {
     padding-right: 8px;
@@ -526,6 +756,7 @@ button {
     background-color: white;
     text-align: right;
     padding: 10px 10px;
+    border: 1px solid rgb(0, 45, 78);
  }
 
  /*Text*/

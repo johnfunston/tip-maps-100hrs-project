@@ -22,7 +22,10 @@
                     <input disabled="true" class="disabled block w-full rounded-md border-gray-300 pl-7 pr-12 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" type="text" name="atWorkplace" value="<%= user.employment.workplaces[0].name %>"/>
                     <% } %>
             </div>
-            
+            <div class="date-time-picker">
+                <input type="date" value=""/>
+                <input type="time" value=""/>
+            </div>
             <div class="relative mt-1 rounded-md shadow-sm">
                 <div class="time--input">
                     <input id="startHour" value="1" name="startHour" type="number"/>

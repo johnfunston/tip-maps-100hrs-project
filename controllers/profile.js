@@ -61,5 +61,27 @@ module.exports = {
     } catch (err) {
       console.log(err);
     }
-  }, 
+  },
+  
+  updateWorkplace: async (req, res) => {
+    try {
+        await User.findOneAndUpdate(
+            { _id: req.user.id },
+            {
+            firstName: req.body.firstName,
+            lastName: req.body.lastName,
+            location: 
+            {
+                city: req.body.city,
+                country: req.body.country,
+                region: req.body.region,   
+                },
+            savingsGoal: req.body.savingsGoal,
+            },
+          );
+          res.redirect("/profile");
+} catch (err) {
+  console.log(err);
+}
+}, 
 };

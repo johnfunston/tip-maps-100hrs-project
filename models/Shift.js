@@ -1,3 +1,4 @@
+const { Timestamp } = require("mongodb");
 const mongoose = require("mongoose");
 
 const ShiftSchema = new mongoose.Schema({
@@ -15,14 +16,12 @@ const ShiftSchema = new mongoose.Schema({
     required: true,
   },
   startTime: {
-    hour: {type: Number},
-    minutes: {type: Number},
-    meridiem: {type: String},
+    type: String, 
+    required: true,
   },
   endTime: {
-    hour: {type: Number},
-    minutes: {type: Number},
-    meridiem: {type: String},
+   type: String,
+   required: true,
   },
   positionWorked: {
     type: String,
@@ -61,6 +60,14 @@ const ShiftSchema = new mongoose.Schema({
     default: Date.now,
   },
   break: {
+    type: Number,
+    required: false,
+  },
+  comment: {
+    type: String,
+    required: false,
+  },
+  rating: {
     type: Number,
     required: false,
   }

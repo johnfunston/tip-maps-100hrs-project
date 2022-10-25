@@ -1,4 +1,4 @@
-<%- include('partials/header') -%>
+
 <% if(user.employment.workplaces.length === 0) { %>
   <div id="registration-pop-up" class="pop-up-window fixed-window">
     <div class="registration-pop-up-content">
@@ -10,6 +10,9 @@
 </div>
 <% } %>
 <div id="user--profile">
+  <div>
+    <a href="/logout">Logout</a>
+  </div>
   <div class="hidden sm:block" aria-hidden="true">
     <div class="py-5">
       <div class="border-t border-gray-200">

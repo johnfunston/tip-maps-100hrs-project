@@ -1,0 +1,19 @@
+<body class="h-auto w-auto">
+    <div id="loadingItem" class="absolute flex-container center-stack center-flow h-100vh w-100vw z-200 white">
+        <div id="loadingBar">
+            <p class="txt-red txt-right">loading</p>
+        </div>
+    </div>
+    <script>
+        const loadingBar = document.querySelector('#loadingBar')
+        function runLoading() {
+            let loading = true
+            if(loading) {
+            loadingBar.style.animation = `2.5s loading`
+            setTimeout(2500)
+            loading = false
+            }
+        }
+        window.addEventListener("load", runLoading);
+        </script>
+</body>
